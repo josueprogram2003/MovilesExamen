@@ -34,7 +34,7 @@ public class LibroActivity extends AppCompatActivity {
     LibroService libroService;
     List<Editorial> listEditorial=new ArrayList<>();
     Spinner spinner;
-    int clave=0;
+    int id=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +47,16 @@ public class LibroActivity extends AppCompatActivity {
         TextView autor = (TextView) findViewById(R.id.Autorp);
         EditText txtpaginas = (EditText)findViewById(R.id.txtPaginasp);
         TextView paginas = (TextView) findViewById(R.id.Paginasp);
+        Bundle bundle=getIntent().getExtras();
+        String ide = bundle.getString("idlibro");
+        String nom= bundle.getString("Titulo");
+        String aut = bundle.getString("Autor");
+        String pag = bundle.getString("Paginas");
+        String idedit = bundle.getString("IdEditorial");
+        String nombreedit = bundle.getString("Nombre");
+        Button btnSave=(Button)findViewById(R.id.btnSave);
+        Button btnVolver=(Button)findViewById(R.id.btnVolver);
+        Button btnEliminar=(Button)findViewById(R.id.btnEliminar);
 
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -56,11 +66,31 @@ public class LibroActivity extends AppCompatActivity {
                 ((TextView) adapterView.getChildAt(0)).setTextSize(18);
 
                 String idCat = adapterView.getSelectedItem().toString();
-                clave = Integer.parseInt(idCat.split(" ")[0]);
+                id = Integer.parseInt(idCat.split(" ")[0]);
+
+                btnSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Libro p=new Libro();
+                        p.setTitulo(txtnombre.getText().toString());
+                        p.setAutor(txtautor.getText().toString());
+                        p.setPaginas(Integer.parseInt(txtpaginas.getText().toString()));
+                        p.setIdeditorial(id);
+                        if(ide.trim().length()==0||ide.equals("")){
+                            addLibro(p);
+                            Intent intent =new Intent(LibroActivity.this,MainActivity.class);
+                            startActivity(intent);
+                        }else{
+                            updateLibro(p,Integer.valueOf(ide));
+                            Intent intent =new Intent(LibroActivity.this,MainActivity.class);
+                            startActivity(intent);
+                        }
+
+                    }
+                });
+                Toast.makeText(getApplicationContext(), String.valueOf(id) , Toast.LENGTH_LONG).show();
 
 
-
-                Toast.makeText(getApplicationContext(), String.valueOf(clave) , Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -68,17 +98,7 @@ public class LibroActivity extends AppCompatActivity {
 
             }
         });
-        Button btnSave=(Button)findViewById(R.id.btnSave);
-        Button btnVolver=(Button)findViewById(R.id.btnVolver);
-        Button btnEliminar=(Button)findViewById(R.id.btnEliminar);
 
-        Bundle bundle=getIntent().getExtras();
-        String ide = bundle.getString("idlibro");
-        String nom= bundle.getString("Titulo");
-        String aut = bundle.getString("Autor");
-        String pag = bundle.getString("Paginas");
-        String idedit = bundle.getString("IdEditorial");
-        String nombreedit = bundle.getString("Nombre");
 
         listspinner();
         txtnombre.setText(nom);

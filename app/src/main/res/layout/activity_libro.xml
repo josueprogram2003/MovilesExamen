@@ -75,14 +75,14 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:text="Registrar y modificar Libro"
+        android:text="Registrar Modificar Libro"
         android:textColor="@color/black"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.045"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/txtnombre"

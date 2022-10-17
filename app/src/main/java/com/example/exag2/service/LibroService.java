@@ -13,8 +13,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface LibroService {
-    @GET("listar")
-    Call<List<Libro>> getProductos();
 
     @GET("listar")
     Call<List<Editorial>> getEditorial();
